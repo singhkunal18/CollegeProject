@@ -8,7 +8,14 @@ import { Component, OnInit } from '@angular/core';
 export class CollectorComponent implements OnInit {
 
   isCalenderVisible:Boolean=false;
-  constructor() { }
+
+  innerheight;
+  innerwidth;
+
+  constructor() { 
+    this.innerheight = window.innerHeight;
+    this.innerwidth = window.innerWidth;
+  }
 
   ngOnInit() {
   }
