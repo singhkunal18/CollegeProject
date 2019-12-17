@@ -1,0 +1,58 @@
+<div class="col-12 home-header" [style.height.px]="innerheight * (.10)">
+    <div>Waste Collection</div>
+    <a routerLink="/home">Home</a>
+</div>
+<div class="col-4"></div>
+<div class="col-4 home-container" [style.height.px]="innerheight * (.90)">
+    <div *ngIf="!isCalenderVisible">
+    <div>Choose the type of waste</div>
+    <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Bio-Degradable
+            </mat-panel-title>
+            <mat-panel-description>
+              Select size
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+      
+          <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+            <mat-button-toggle value="bold">Small</mat-button-toggle>
+            <mat-button-toggle value="italic">Medium</mat-button-toggle>
+            <mat-button-toggle value="underline">Large</mat-button-toggle>
+          </mat-button-toggle-group>
+
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true"
+                             (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+                Non Bio-Degradable
+            </mat-panel-title>
+            <mat-panel-description>
+                Select size
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                <mat-button-toggle value="bold">Small</mat-button-toggle>
+                <mat-button-toggle value="italic">Medium</mat-button-toggle>
+                <mat-button-toggle value="underline">Large</mat-button-toggle>
+            </mat-button-toggle-group>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <button mat-button (click)="showCalender()">Next</button>
+    </div>
+    <div *ngIf="isCalenderVisible">
+        <div>Schedule your Pick-up</div>
+        <div>
+        <input type="date">
+        <input type="time">
+        </div>
+        <button mat-button (click)="showCalender()">Back</button>
+
+    </div>
+      
+</div>
+<div class="col-4"></div>
