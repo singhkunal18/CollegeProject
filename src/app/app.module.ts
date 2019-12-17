@@ -10,6 +10,9 @@ import { DonationComponent } from './donation/donation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
+import { LoginComponent } from './authentication/login/login.component';
+import { ForgotpasswordComponent } from './authentication/forgotpassword/forgotpassword.component';
+import { RegistrationComponent } from './authentication/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { MaterialModule } from './material.module';
     HomeComponent,
     CollectorComponent,
     DonationComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LoginComponent,
+    ForgotpasswordComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
