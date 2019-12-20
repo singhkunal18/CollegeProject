@@ -12,6 +12,9 @@ export class HomeComponent implements OnInit {
   innerheight;
   innerwidth;
 
+  selectedDate;
+  selectedTime;
+  
   constructor(private router:Router) { 
       this.innerheight = window.innerHeight;
       this.innerwidth = window.innerWidth;

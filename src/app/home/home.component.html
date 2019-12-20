@@ -3,11 +3,30 @@
 </div>
 <div class="col-4"></div>
 <div class="col-4 home-container" [style.height.px]="innerheight * (.90)">
-    <div class="col-12 wc-container">
+    <!-- <div class="col-12 wc-container">
         <a routerLink="/gcollection">Waste Collection</a>
     </div>
     <div class="col-12 id-container">
         <a routerLink="/idonation">Item Donation</a>
-    </div>
+    </div> -->
+    <mat-card class="wc-container" routerLink="/gcollection">
+        <mat-card-header>
+          <div mat-card-avatar>
+            <img class = "icon-46" src="{{ 'wastecollection_logo' | icons }}" />
+          </div>
+          <mat-card-title>Waste Collection</mat-card-title>
+          <mat-card-subtitle>Get your waste collected from your home</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+      <div style="height: 40px; width: 100%;"></div>
+      <mat-card class="id-container" routerLink="/idonation">
+        <mat-card-header>
+          <div mat-card-avatar>
+            <img class = "icon-46" src="{{ 'itemdonation_logo' | icons }}" />
+          </div>
+          <mat-card-title>Items Donation</mat-card-title>
+          <mat-card-subtitle>Donate your unnessary/unused goods</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
 </div>
 <div class="col-4"></div>

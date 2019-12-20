@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +14,7 @@ import { MaterialModule } from './material.module';
 import { LoginComponent } from './authentication/login/login.component';
 import { ForgotpasswordComponent } from './authentication/forgotpassword/forgotpassword.component';
 import { RegistrationComponent } from './authentication/registration/registration.component';
+import { IconsPipe } from './utils/icon.pipe';
 
 @NgModule({
   declarations: [
@@ -24,13 +26,16 @@ import { RegistrationComponent } from './authentication/registration/registratio
     PageNotFoundComponent,
     LoginComponent,
     ForgotpasswordComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    IconsPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

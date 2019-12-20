@@ -1,1 +1,23 @@
-<p>donation works!</p>
+<div class="col-12 home-header" [style.height.px]="innerheight * (.10)">
+    <div>Waste Collection</div>
+    <img class="icon-34" src="{{ 'recycle_logo' | icons }}">
+  </div>
+  <div class="col-4">
+    <img class="icon-34 home-icon" src="{{ 'home_logo' | icons }}" routerLink="/home">
+  </div>
+  <div class="col-4 home-container" [style.height.px]="innerheight * (.90)">
+    <form (ngSubmit)="onSubmit()" #wcolletionForm="ngForm">
+        <mat-radio-group aria-label="Select an option" class="items-container">
+            <mat-radio-button value="clothes">Clothes</mat-radio-button>
+            <mat-radio-button value="shoes">Shoes</mat-radio-button>
+            <mat-radio-button value="utensils">Utensils</mat-radio-button>
+            <mat-radio-button value="food">Food</mat-radio-button>
+          </mat-radio-group>
+        <div class="action-items-container">
+          <button mat-raised-button color="warn" routerLink="/home">Back</button>
+          <button mat-raised-button color="primary" type="submit">Checkout</button>
+        </div>
+    </form>
+  
+  </div>
+  <div class="col-4"></div>

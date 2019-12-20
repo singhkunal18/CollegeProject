@@ -1,20 +1,29 @@
-.home-container{
-    display: flex; 
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 
-    background-color: orange;
-}
-.wc-container, .id-container{
+/* .wc-container, .id-container{
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: green;
     margin: 20px;
     cursor: pointer;
-}
+} */
 
 a{
     text-decoration: none;
 }
+
+.wc-container, .id-container {
+    width: 100%;
+    background-color: cadetblue;
+    cursor: pointer;
+    color: white;
+  }
+  mat-card-subtitle{
+      color: rgb(229, 226, 226);
+  }
+  
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+    
+  }
