@@ -7,9 +7,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DonationComponent implements OnInit {
 
-  constructor() { }
+  innerheight;
+  innerwidth;
+
+  selectedDate:any;
+  selectedTime:any;
+  selectedName:any;
+  selectedAddress:any;
+  selectedCity:any;
+  selectedState:any;
+  selectedPinCode:any;
+
+  constructor() {
+    this.innerheight = window.innerHeight;
+    this.innerwidth = window.innerWidth;
+  }
 
   ngOnInit() {
+  }
+
+  onSubmit(){
+    
   }
 
 }
