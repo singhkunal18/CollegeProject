@@ -31,12 +31,22 @@ export class CollectorComponent implements OnInit {
   selectedNonBioDegQuantity:Number=0;
   totalCost:Number=0;
 
+  minFinalDate:any;
+  maxFinalDate:any;
+
   constructor() {
     this.innerheight = window.innerHeight;
     this.innerwidth = window.innerWidth;
   }
 
   ngOnInit() {
+    var currentDate = new Date();
+    var minDate = new Date();
+    currentDate.setDate(currentDate.getDate()+10);
+    var maxDate = new Date(currentDate.getFullYear()+"-"+(currentDate.getMonth()+1)+"-"+currentDate.getDate());
+    this.minFinalDate = minDate.getFullYear()+"-"+(minDate.getMonth()+1)+"-"+minDate.getDate();
+    this.maxFinalDate = maxDate.getFullYear()+"-"+(maxDate.getMonth()+1)+"-"+maxDate.getDate();
+    
   }
 
   panelOpenState = false;
@@ -71,6 +81,11 @@ export class CollectorComponent implements OnInit {
     this.isCheckoutVisible=true;
     this.isAddAddressVisible=false;
     this.isCalenderVisible=false;
+
+    if(!this.selectedBioDegQuantity)
+    this.selectedBioDegQuantity=0;
+    if(!this.selectedNonBioDegQuantity)
+    this.selectedNonBioDegQuantity=0;
 
     this.totalCost = (+this.selectedBioDegQuantity)+(+this.selectedNonBioDegQuantity);
     

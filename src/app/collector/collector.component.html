@@ -1,11 +1,11 @@
 <div class="col-12 home-header" [style.height.px]="innerheight * (.10)">
-  <div>Waste Collection</div>
+  <img class="icon-25 home-icon" src="{{ 'home_logo' | icons }}" routerLink="/home">
+  <div>Garbage Collection</div>
   <img class="icon-34" src="{{ 'recycle_logo' | icons }}">
 </div>
 <div class="col-4">
-  <!-- <img class="icon-34 home-icon" src="{{ 'home_logo' | icons }}" routerLink="/home"> -->
 </div>
-<div class="col-4 home-container" [style.height.px]="innerheight * (.90)">
+<div class="col-4 home-container" [style.height.px]="innerheight * (.80)">
   <form (ngSubmit)="gotoCheckout()" #wcolletionForm="ngForm">
     <div *ngIf="!isCalenderVisible && 
                 !isAddAddressVisible && 
@@ -61,7 +61,8 @@
       <div class="items-heading">Schedule your Pick-up</div>
       <div class="dateTimeItems">
         <label for="date-selection">Select Date: </label>
-        <input id="date-selection" type="date" name="date-selection" [(ngModel)]="selectedDate">
+        <input id="date-selection" type="date" min="{{minFinalDate}}" max="{{maxFinalDate}}"
+        name="date-selection" [(ngModel)]="selectedDate">
       </div>
       <div class="dateTimeItems">
         <label for="time-selection">Select Time: </label>
@@ -74,7 +75,7 @@
     </div>
 
     <div class="items-container address-form-elements" *ngIf="!isCalenderVisible  && isAddAddressVisible">
-      <div class="items-heading container-items">Please provide Pickup Address</div>
+      <div class="items-heading container-items">Pickup Address</div>
       <mat-form-field>
         <input matInput placeholder="First name" name="name-selection" [(ngModel)]="selectedName">
       </mat-form-field>
@@ -88,9 +89,9 @@
         <input matInput placeholder="State" name="state-selection" [(ngModel)]="selectedState">
       </mat-form-field>
       <mat-form-field>
-        <input matInput #postalCode maxlength="5" placeholder="Postal Code" value="94043" name="pincode-selection"
+        <input matInput #postalCode maxlength="6" placeholder="Postal Code" value="94043" name="pincode-selection"
           [(ngModel)]="selectedPinCode">
-        <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
+        <mat-hint align="end">{{postalCode.value.length}} / 6</mat-hint>
       </mat-form-field>
       <div class="action-items-container">
         <button mat-raised-button color="warn" (click)="addAddress()">Back</button>

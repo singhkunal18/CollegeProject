@@ -1,23 +1,121 @@
 <div class="col-12 home-header" [style.height.px]="innerheight * (.10)">
-    <div>Waste Collection</div>
-    <img class="icon-34" src="{{ 'recycle_logo' | icons }}">
+  <img class="icon-25 home-icon" src="{{ 'home_logo' | icons }}" routerLink="/home">
+  <div>Item Donation</div>
+  <img class="icon-34" src="{{ 'recycle_logo' | icons }}">
+</div>
+<div class="col-4">
+  <!-- <img class="icon-34 home-icon" src="{{ 'home_logo' | icons }}" routerLink="/home"> -->
+</div>
+<div class="col-4 home-container" [style.height.px]="innerheight * (.80)">
+  <form (ngSubmit)="gotoCheckout()" #wcolletionForm="ngForm">
+    <div *ngIf="!isCalenderVisible && 
+                !isAddAddressVisible && 
+                !isCheckoutVisible && 
+                !isPaymentVisible &&
+                !isOrderPlaced" class="items-container">
+      <div class="items-heading container-items">Choose the type of donation</div>
+      <div>
+          <mat-checkbox class="category-items" name="clothes" [(ngModel)]="selectedClothes">Clothes</mat-checkbox>
+          <mat-checkbox class="category-items" name="books" [(ngModel)]="selectedBooks">Books</mat-checkbox>
+          <mat-checkbox class="category-items" name="utensils" [(ngModel)]="selectedUtensils">Utensils</mat-checkbox>
+          <mat-checkbox class="category-items" name="shoes" [(ngModel)]="selectedShoes">Shoes</mat-checkbox>
+      </div>
+      <div class="action-items-container">
+        <button mat-raised-button color="warn" routerLink="/home">Back</button>
+        <button mat-raised-button color="primary" (click)="showCalender()">Next</button>
+      </div>
+
+    </div>
+    <div *ngIf="isCalenderVisible  && !isAddAddressVisible" class="items-container">
+      <div class="items-heading">Schedule your Pick-up</div>
+      <div class="dateTimeItems">
+        <label for="date-selection">Select Date: </label>
+        <input id="date-selection" type="date" min="{{minFinalDate}}" max="{{maxFinalDate}}"
+        name="date-selection" [(ngModel)]="selectedDate">
+      </div>
+      <div class="dateTimeItems">
+        <label for="time-selection">Select Time: </label>
+        <input id="time-selection" type="time" name="time-selection" [(ngModel)]="selectedTime">
+      </div>
+      <div class="action-items-container">
+        <button mat-raised-button color="warn" (click)="showCalender()">Back</button>
+        <button mat-raised-button color="primary" (click)="addAddress()">Next</button>
+      </div>
+    </div>
+
+    <div class="items-container address-form-elements" *ngIf="!isCalenderVisible  && isAddAddressVisible">
+      <div class="items-heading container-items">Pickup Address</div>
+      <mat-form-field>
+        <input matInput placeholder="First name" name="name-selection" [(ngModel)]="selectedName">
+      </mat-form-field>
+      <mat-form-field>
+        <textarea matInput placeholder="Address" name="address-selection" [(ngModel)]="selectedAddress"></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="City" name="city-selection" [(ngModel)]="selectedCity">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="State" name="state-selection" [(ngModel)]="selectedState">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput #postalCode maxlength="6" placeholder="Postal Code" value="94043" name="pincode-selection"
+          [(ngModel)]="selectedPinCode">
+        <mat-hint align="end">{{postalCode.value.length}} / 6</mat-hint>
+      </mat-form-field>
+      <div class="action-items-container">
+        <button mat-raised-button color="warn" (click)="addAddress()">Back</button>
+        <button mat-raised-button color="primary" type="submit">Checkout</button>
+      </div>
+    </div>
+  </form>
+
+  <div *ngIf="isCheckoutVisible">
+    <mat-card class="col-12 checkout-container">
+      <div class="items-heading">Your Order Details {{selectedName}}</div>
+      <div class="container-items">
+        <span style="font-weight:bold;">Selected Items</span>
+        <span *ngIf="selectedClothes">-Clothes-</span>
+        <span *ngIf="selectedBooks">-Books-</span>
+        <span *ngIf="selectedUtensils">-Utensils-</span>
+        <span *ngIf="selectedShoes">-Shoes-</span>
+      </div>
+
+      <div class="container-items"><span style="font-weight:bold;">Date :- </span><span>{{selectedDate}}</span></div>
+      <div class="container-items"><span style="font-weight:bold;">Time :- </span><span>{{selectedTime}}</span></div>
+      <div class="container-items"><span style="font-weight:bold;">Address :- </span><span>{{selectedAddress}}</span>
+      </div>
+      <div class="container-items"><span style="font-weight:bold;">City :- </span><span>{{selectedCity}}</span></div>
+      <div class="container-items"><span style="font-weight:bold;">State :- </span><span>{{selectedState}}</span></div>
+      <div class="container-items"><span style="font-weight:bold;">PinCode :- </span><span>{{selectedPinCode}}</span>
+      </div>
+
+    </mat-card>
+    <div class="action-items-container">
+      <button mat-raised-button color="warn" (click)="goBackToAddresses()">Back</button>
+      <button mat-raised-button color="primary" (click)="showPlacedOrderMessage()">Place your order</button>
+    </div>
   </div>
-  <div class="col-4">
-    <img class="icon-34 home-icon" src="{{ 'home_logo' | icons }}" routerLink="/home">
+
+  <!-- <div *ngIf="isPaymentVisible">
+    <div class="items-heading">Select Payment Method</div>
+    <mat-card class="payment-container">
+      <mat-radio-group aria-label="Select an Payment Method" class="radio-button-group">
+        <mat-radio-button value="COD">COD</mat-radio-button>
+        <mat-radio-button value="Credit Card">Credit/Debit Cards</mat-radio-button>
+        <mat-radio-button value="Wallets">Wallets</mat-radio-button>
+      </mat-radio-group>
+    </mat-card>
+    <div class="action-items-container">
+      <button mat-raised-button color="warn" (click)="goBackToCheckout()">Back</button>
+      <button mat-raised-button color="primary" (click)="showPlacedOrderMessage()">Place your order</button>
+    </div>
+  </div> -->
+
+  <div *ngIf="isOrderPlaced">
+    <mat-card>
+      <div class="items-heading">Your Order has been Placed</div>
+    </mat-card>
   </div>
-  <div class="col-4 home-container" [style.height.px]="innerheight * (.90)">
-    <form (ngSubmit)="onSubmit()" #wcolletionForm="ngForm">
-        <mat-radio-group aria-label="Select an option" class="items-container">
-            <mat-radio-button value="clothes">Clothes</mat-radio-button>
-            <mat-radio-button value="shoes">Shoes</mat-radio-button>
-            <mat-radio-button value="utensils">Utensils</mat-radio-button>
-            <mat-radio-button value="food">Food</mat-radio-button>
-          </mat-radio-group>
-        <div class="action-items-container">
-          <button mat-raised-button color="warn" routerLink="/home">Back</button>
-          <button mat-raised-button color="primary" type="submit">Checkout</button>
-        </div>
-    </form>
-  
-  </div>
-  <div class="col-4"></div>
+
+</div>
+<div class="col-4"></div>
