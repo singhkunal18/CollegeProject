@@ -3,11 +3,16 @@
   <img class="icon-34" src="{{ 'recycle_logo' | icons }}">
 </div>
 <div class="col-4">
-  <img class="icon-34 home-icon" src="{{ 'home_logo' | icons }}" routerLink="/home">
+  <!-- <img class="icon-34 home-icon" src="{{ 'home_logo' | icons }}" routerLink="/home"> -->
 </div>
 <div class="col-4 home-container" [style.height.px]="innerheight * (.90)">
-  <form (ngSubmit)="onSubmit()" #wcolletionForm="ngForm">
-    <div *ngIf="!isCalenderVisible && !isAddAddressVisible" class="items-container">
+  <form (ngSubmit)="gotoCheckout()" #wcolletionForm="ngForm">
+    <div *ngIf="!isCalenderVisible && 
+                !isAddAddressVisible && 
+                !isCheckoutVisible && 
+                !isPaymentVisible &&
+                !isOrderPlace &&
+                !isOrderPlaced" class="items-container">
       <div class="items-heading container-items">Choose the type of waste</div>
       <div class="container-items">
         <mat-accordion>
@@ -23,9 +28,9 @@
 
             <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="size-container"
               #bdGroup="matButtonToggleGroup">
-              <mat-button-toggle value="bd-small">Small</mat-button-toggle>
-              <mat-button-toggle value="bd-medium">Medium</mat-button-toggle>
-              <mat-button-toggle value="bd-large">Large</mat-button-toggle>
+              <mat-button-toggle value="10">Small (Rs. 10)</mat-button-toggle>
+              <mat-button-toggle value="30">Medium (Rs. 30)</mat-button-toggle>
+              <mat-button-toggle value="50">Large (Rs. 50)</mat-button-toggle>
             </mat-button-toggle-group>
 
           </mat-expansion-panel>
@@ -40,9 +45,9 @@
             </mat-expansion-panel-header>
             <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="size-container"
               #nbdGroup="matButtonToggleGroup">
-              <mat-button-toggle value="nbd-small">Small</mat-button-toggle>
-              <mat-button-toggle value="nbd-medium">Medium</mat-button-toggle>
-              <mat-button-toggle value="nbd-large">Large</mat-button-toggle>
+              <mat-button-toggle value="10">Small (Rs. 10)</mat-button-toggle>
+              <mat-button-toggle value="30">Medium (Rs. 30)</mat-button-toggle>
+              <mat-button-toggle value="50">Large (Rs. 50)</mat-button-toggle>
             </mat-button-toggle-group>
           </mat-expansion-panel>
         </mat-accordion>
@@ -54,12 +59,12 @@
 
     </div>
     <div *ngIf="isCalenderVisible  && !isAddAddressVisible" class="items-container">
-      <div class="items-heading container-items">Schedule your Pick-up</div>
-      <div class="container-items">
+      <div class="items-heading">Schedule your Pick-up</div>
+      <div class="dateTimeItems">
         <label for="date-selection">Select Date: </label>
         <input id="date-selection" type="date" name="date-selection" [(ngModel)]="selectedDate">
       </div>
-      <div class="container-items">
+      <div class="dateTimeItems">
         <label for="time-selection">Select Time: </label>
         <input id="time-selection" type="time" name="time-selection" [(ngModel)]="selectedTime">
       </div>
@@ -70,8 +75,9 @@
     </div>
 
     <div class="items-container address-form-elements" *ngIf="!isCalenderVisible  && isAddAddressVisible">
+      <div class="items-heading container-items">Please provide Pickup Address</div>
       <mat-form-field>
-        <input matInput placeholder="First name" name="name-selection" [(ngModel)]="selectedName" >
+        <input matInput placeholder="First name" name="name-selection" [(ngModel)]="selectedName">
       </mat-form-field>
       <mat-form-field>
         <textarea matInput placeholder="Address" name="address-selection" [(ngModel)]="selectedAddress"></textarea>
@@ -83,8 +89,8 @@
         <input matInput placeholder="State" name="state-selection" [(ngModel)]="selectedState">
       </mat-form-field>
       <mat-form-field>
-        <input matInput #postalCode maxlength="5" placeholder="Postal Code" value="94043" 
-        name="pincode-selection" [(ngModel)]="selectedPinCode">
+        <input matInput #postalCode maxlength="5" placeholder="Postal Code" value="94043" name="pincode-selection"
+          [(ngModel)]="selectedPinCode">
         <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
       </mat-form-field>
       <div class="action-items-container">
@@ -93,6 +99,47 @@
       </div>
     </div>
   </form>
+
+  <div *ngIf="isCheckoutVisible">
+    <mat-card class="col-12 checkout-container">
+      <div class="items-heading">Your Order Details {{selectedName}}</div>
+      <!-- <div>Bio-Degradable :- {{nonBioDegradableButtonGroup.value}}</div> -->
+      <!-- <div>Non Bio-Degradable :- {{bioDegradableButtonGroup.value}}</div> -->
+      <div class="container-items"><span style="font-weight:bold;">Date :- </span><span>{{selectedDate}}</span></div>
+      <div class="container-items"><span style="font-weight:bold;">Time :- </span><span>{{selectedTime}}</span></div>
+      <div class="container-items"><span style="font-weight:bold;">Address :- </span><span>{{selectedAddress}}</span></div>
+      <div class="container-items"><span style="font-weight:bold;">City :- </span><span>{{selectedCity}}</span></div>
+      <div class="container-items"><span style="font-weight:bold;">State :- </span><span>{{selectedState}}</span></div>
+      <div class="container-items"><span style="font-weight:bold;">PinCode :- </span><span>{{selectedPinCode}}</span></div>
+      <div class="container-items"><span style="font-weight:bold;">Total Cost :- </span><span>Rs. {{totalCost}}</span></div>
+
+    </mat-card>
+    <div class="action-items-container">
+      <button mat-raised-button color="warn" (click)="goBackToAddresses()">Back</button>
+      <button mat-raised-button color="primary" (click)="goToPayment()">Proceed To Payment</button>
+    </div>
+  </div>
+
+  <div *ngIf="isPaymentVisible">
+    <div class="items-heading">Select Payment Method</div>
+    <mat-card class="payment-container">
+      <mat-radio-group aria-label="Select an Payment Method" class="radio-button-group">
+        <mat-radio-button value="COD">COD</mat-radio-button>
+        <mat-radio-button value="Credit Card">Credit/Debit Cards</mat-radio-button>
+        <mat-radio-button value="Wallets">Wallets</mat-radio-button>
+      </mat-radio-group>
+    </mat-card>
+    <div class="action-items-container">
+      <button mat-raised-button color="warn" (click)="goBackToCheckout()">Back</button>
+      <button mat-raised-button color="primary" (click)="showPlacedOrderMessage()">Place your order</button>
+    </div>
+  </div>
+
+  <div *ngIf="isOrderPlaced">
+    <mat-card>
+      <div class="items-heading">Your Order has been Placed</div>
+      </mat-card>
+  </div>
 
 </div>
 <div class="col-4"></div>

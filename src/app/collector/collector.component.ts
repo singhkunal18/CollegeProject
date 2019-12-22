@@ -13,6 +13,9 @@ export class CollectorComponent implements OnInit {
 
   isCalenderVisible: Boolean = false;
   isAddAddressVisible: Boolean = false;
+  isCheckoutVisible:Boolean = false;
+  isPaymentVisible:Boolean=false;
+  isOrderPlaced:Boolean=false;
 
   innerheight;
   innerwidth;
@@ -24,6 +27,9 @@ export class CollectorComponent implements OnInit {
   selectedCity:any;
   selectedState:any;
   selectedPinCode:any;
+  selectedBioDegQuantity:Number=0;
+  selectedNonBioDegQuantity:Number=0;
+  totalCost:Number=0;
 
   constructor() {
     this.innerheight = window.innerHeight;
@@ -36,8 +42,11 @@ export class CollectorComponent implements OnInit {
   panelOpenState = false;
 
   showCalender() {
-    // console.log(this.bioDegradableButtonGroup.value);
-    // console.log(this.nonBioDegradableButtonGroup.value);
+    if(this.bioDegradableButtonGroup)
+    this.selectedBioDegQuantity = this.bioDegradableButtonGroup.value;
+    if(this.nonBioDegradableButtonGroup)
+    this.selectedNonBioDegQuantity = this.nonBioDegradableButtonGroup.value;
+    
     if (!this.isCalenderVisible) {
       this.isCalenderVisible = true;
     } else {
@@ -45,7 +54,7 @@ export class CollectorComponent implements OnInit {
     }
   }
 
-  addAddress(){
+  addAddress(){    
     this.showCalender();
     if (!this.isAddAddressVisible) {
       this.isAddAddressVisible = true;
@@ -53,8 +62,20 @@ export class CollectorComponent implements OnInit {
       this.isAddAddressVisible = false;
     }
   }
+  goBackToAddresses(){
+    this.isAddAddressVisible=true;
+    this.isCheckoutVisible=false;
+  }
 
-  onSubmit(){
+  gotoCheckout(){
+    this.isCheckoutVisible=true;
+    this.isAddAddressVisible=false;
+    this.isCalenderVisible=false;
+
+    this.totalCost = (+this.selectedBioDegQuantity)+(+this.selectedNonBioDegQuantity);
+    
+    console.log(this.selectedBioDegQuantity);
+    console.log(this.selectedNonBioDegQuantity);
     console.log(this.selectedDate);
     console.log(this.selectedTime);
     console.log(this.selectedName);
@@ -62,6 +83,18 @@ export class CollectorComponent implements OnInit {
     console.log(this.selectedCity);
     console.log(this.selectedState);
     console.log(this.selectedPinCode);
+  }
+  goToPayment(){
+    this.isPaymentVisible=true;
+    this.isCheckoutVisible=false;
+  }
+  goBackToCheckout(){
+    this.isCheckoutVisible=true;
+    this.isPaymentVisible=false;
+  }
+  showPlacedOrderMessage(){
+    this.isPaymentVisible=false;
+    this.isOrderPlaced=true;
   }
 
 }
